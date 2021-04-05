@@ -2,11 +2,11 @@
 
 ## Goals
 
-1. Host a static javascript web application on Azure
-2. Read from configuration file
-3. Read from external API
-4. Require Authentication from Azure Active Directory
-5. Read from internal API Managed endpoint
+✅ Host a static javascript web application on Azure
+⬛ Read from configuration file
+⬛ Read from external API
+⬛ Require Authentication from Azure Active Directory
+⬛ Read from internal API Managed endpoint
 
 ## References
 
