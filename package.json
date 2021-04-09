@@ -3,15 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "app": "concurrently --kill others \"npm run start\" \"npm run api\" \"npm run browse\"",
-    "start": "swa start --api=http://localhost:7071",
-    "api": "npm --prefix ./api/ run start",
-    "browse": "sleepms 1000 && start http://localhost:4280",
-    "test": "echo \"No tests yet...\""
   },
   "dependencies": {},
-  "devDependencies": {
-    "concurrently": "^6.0.1",
-    "sleep-ms": "^2.0.1"
-  }
+  "devDependencies": {}
 }
