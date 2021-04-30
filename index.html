@@ -22,12 +22,12 @@
     (async function() {
       let { text } = await( await fetch(`/api/message`)).json();
       document.querySelector('#name').textContent = text;
-    }())
+    }());
 
     (async function() {
       let { text } = await( await fetch(`/api/pet`)).json();
       document.querySelector('#pet').textContent = text;
-    }())
+    }());
   </script>
 </body>
 
