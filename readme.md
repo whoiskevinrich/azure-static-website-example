@@ -4,9 +4,9 @@
 
 - ✅ Host a static javascript web application on Azure
 - ✅ Read from configuration file
-- ✅ Read from external API
+- ✅ Read from API Management endpoint
 - ⬛ Require Authentication from Azure Active Directory
-- ⬛ Read from internal API Managed endpoint
+
 
 ## Local Debugging
 
