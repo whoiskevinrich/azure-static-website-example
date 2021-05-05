@@ -16,9 +16,15 @@ Prerequisites:
 
 Running Site & Backend Locally:
 
-1. Start Azure Function Emulator
+1. Add API Local Settings
+   - Create `/api/local.settings.json`
+   - Ensure file is _excluded_ from source control
+   - Add required keys for local development, and/or configure on Azure host:
+     - "Values:GREYBILL_PETS_API_KEY"
+     - "Values:GREYBILL_PETS_BASE_URL"
+2. Start Azure Function Emulator
    - Press `F5` in Visual Studio Code
-2. Start Live Server
+3. Start Live Server
    - Press `Ctrl+Shift+P`
    - Select `Live Server: Open with Live Server`
 

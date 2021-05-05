@@ -16,7 +16,6 @@ module.exports = async function (context, req) {
             process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
             let result = await fetch(url, {headers: headers});
             process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 1;
-            context.log(result);
             return await result.json();
         } catch (error) {
             context.log(error);
@@ -28,8 +27,7 @@ module.exports = async function (context, req) {
     context.log(pet);
 
     context.res = {
-      body: {
-        text: `w00f! ${pet.name}`
-      }
+      headers: { 'Content-Type': 'application/json' },
+      body: { pet }
     };
   };
