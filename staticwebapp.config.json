@@ -1,7 +1,8 @@
 {
     "routes": [
-        { "route": "/login", "redirect": "/.auth/login/aad" },
+        { "route": "/login", "redirect": "/.auth/login/github" },
         { "route": "/profile", "allowedRoles": ["authenticated"] },
-        { "route": "/logout", "redirect": "/.auth/logout" }
+        { "route": "/logout", "redirect": "/.auth/logout" },
+        { "route": "/api/*", "allowedRoles": ["authenticated"]}
     ]
 }

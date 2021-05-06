@@ -15,13 +15,17 @@
 
 <body>
   <main>
-    <h1>Vanilla JavaScript App</h1>
+    <h1>Azure Static Web App Example</h1>
     <p>Loading content through API Configuration: <b id="phone">...</b></p>
     <p>Loading content through API => APIM: <b id="pet">...</b></p>
     
     <p>
       <a href="/login" class="btn btn-primary">Login</a>
-      <a href="/profile" class="btn btn-secondary">Profile</a>
+      <a href="/logout" class="btn btn-danger">Logout</a>
+    </p>
+
+    <p>
+      <b id='user'></b>
     </p>
   </main>
 
@@ -36,6 +40,14 @@
       let { pet } = await( await fetch(`/api/pet`)).json();
       console.log("pet: " + pet);
       document.querySelector('#pet').textContent = `w00f! ${pet.name} is ${pet.status}`;
+    }());
+
+    (async function() {
+      const response = await fetch('/.auth/me');
+      const payload = await response.json();
+      const { clientPrincipal } = payload;
+      
+      document.querySelector('#user').textContent = JSON.stringify(JSON.parse(clientPrincipal), null, 2);
     }());
   </script>
 </body>
