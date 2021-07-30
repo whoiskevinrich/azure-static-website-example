@@ -16,12 +16,12 @@
 <body>
   <main>
     <h1>Azure Static Web App Example</h1>
-    <p>Loading content through API Configuration: <b id="phone">...</b></p>
+    <p>Loading content through BFF API Configuration: <b id="phone">...</b></p>
     <!-- <p>Loading content through API => APIM: <b id="pet">...</b></p> -->
     
     <p>
-      <a href="/login" class="btn btn-primary">Login</a>
-      <a href="/logout" class="btn btn-danger">Logout</a>
+      <a id="loginButton" href="/login" class="btn btn-primary">Login</a>
+      <a id="logoutButton" href="/logout" class="btn btn-danger">Logout</a>
     </p>
 
     <p>
@@ -36,18 +36,16 @@
       document.querySelector('#phone').textContent = `Greetings, Program! My phone number is: ${text}`;
     }());
 
-    (async function() {
-      let { pet } = await( await fetch(`/api/pet`)).json();
-      console.log("pet: " + pet);
-      document.querySelector('#pet').textContent = `w00f! ${pet.name} is ${pet.status}`;
-    }());
+    // (async function() {
+    //   let { pet } = await( await fetch(`/api/pet`)).json();
+    //   console.log("pet: " + pet);
+    //   document.querySelector('#pet').textContent = `w00f! ${pet.name} is ${pet.status}`;
+    // }());
 
     (async function() {
       const response = await fetch('/.auth/me');
       const payload = await response.json();
-      const { clientPrincipal } = payload;
-      
-      document.querySelector('#user').textContent = JSON.stringify(JSON.parse(clientPrincipal), null, 2);
+      document.querySelector('#user').textContent = payload.clientPrincipal.userDetails;
     }());
   </script>
 </body>
