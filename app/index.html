@@ -6,29 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-  <title>Vanilla JavaScript App</title>
+  <title>Azure Static Web Apps</title>
 </head>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <body>
-  <!-- <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">Azure Static Web App Example</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="d-flex flex-row-reverse">
-          <a href="/login" class="btn btn-primary">Login</a>
-          <a href="/logout" class="btn btn-danger">Logout</a>
-        </div>  
-      </div>
-    </div>
-  </nav> -->
-
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Azure Static Web App Example</a>
+      <a class="navbar-brand" href="/">Azure Static Web Apps</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -56,24 +41,102 @@
   </nav>
 
   <main class="container">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">How to Retrieve Host Configuration</h4>
-        <h6 class="card-subtitle mb-2 text-muted">
-          The static JavaScript can call it's BFF api to retrieve config values.
-        </h6>
-        <p class="card-text">
-          <div class="alert alert-info">
-            Dynamic content from Azure Function Config: <b id="functionConfigValue">...</b>
+
+    <h4>Advantages</h4>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading-localProxySection">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-localProxySection" aria-expanded="true" aria-controls="collapse-localProxySection">
+            BFF Patterns for Local Development
+          </button>
+        </h2>
+        <div id="collapse-localProxySection" class="accordion-collapse collapse show" aria-labelledby="heading-localProxySection" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p>Backend-For-Frontend (BFF) Functions can be developed against a local environment</p>
+            <div class="alert alert-info">
+              <div>Example dynamic content retrieved from Azure Function Config:</div>
+              <div><b id="functionConfigValue">...</b></div>
+            </div>
+            <h5>What's happening here?</h5>
+            <ul>
+              <li>JavaScript on the client calls the relative path for it's BFF API</li>
+              <li>For Hosted Environments (PROD/DEV/etc), routing to the correct Function is handled by Azure service</li>
+              <li>For local Development, routing to the correct Function is handled by proxy through the CLI</li>
+              <li>The function retreives configured values from it's host</li>
+            </ul>
+  
+            <h5>Why does it matter?</h5>
+            <ul>
+              <li>Developers can focus on code instead of infrastructure</li>
+              <li>Developers can work against local/junk/mocked endpoints locally</li>
+              <li>
+                Developers reduce cogantive load by working against one set of local tools
+                 without the need to run and configure multiple projects
+              </li>
+              <li>BFF Base URLs no longer need to be managed in the codebase</li>
+              <li>Developers no longer need to sync vertical slices across codebases</li>
+            </ul>
+
+            <h5>Unifed Logging Experience for Local Development</h5>
+            <ul>
+              <li>Reduced cogative load for the developer: logging shows exactly what's happening as it would in the hosted environments</li>
+              <li>Notice the message prefix for <i class="font-monospace">swa</i> and <i class="font-monospace">api</i> in the following logs</li>
+            </ul>
+            <pre class="font-monospace" style="font-size: x-small;">
+<br/>[swa] GET http://0.0.0.0:5005/api/message (proxy)
+<br/>[swa] GET http://0.0.0.0:5005/api/film (proxy)
+<br/>[api] [2021-08-07T18:01:57.269Z] GET http://192.168.1.165:5001/.auth/me - 200
+<br/>[api] Executing 'Functions.GetMessage' (Reason='This function was programmatically called via the host APIs.', Id=d98217d0-ed97-404b-aab0-dc4075f55db2)
+<br/>[api] [2021-08-07T18:01:57.270Z] Executing 'Functions.GetFilm' (Reason='This function was programmatically called via the host APIs.', Id=0aa44459-c919-4097-abd8-df81db0caa77)
+<br/>[api] [2021-08-07T18:01:57.270Z] JavaScript HTTP trigger function processed a request for Message
+<br/>[api] [2021-08-07T18:01:57.271Z] Executed 'Functions.GetMessage' (Succeeded, Id=d98217d0-ed97-404b-aab0-dc4075f55db2, Duration=2ms)
+<br/>[swa] GET http://192.168.1.165:5001/api/message - 200
+<br/>[api] [2021-08-07T18:01:57.273Z] JavaScript HTTP trigger function processed a request for Film from Managed API    
+<br/>[api] [2021-08-07T18:01:57.273Z] ReferenceError: headers is not defined
+<br/>[api]     <i class="ms-5"></i>at getFilm (D:\Source\azure-static-website-example\api\GetFilm\index.js:13:53)
+<br/>[api]     <i class="ms-5"></i>at module.exports (D:\Source\azure-static-website-example\api\GetFilm\index.js:21:22)
+<br/>[api]     <i class="ms-5"></i>at WorkerChannel.invocationRequest (C:\Users\whois\AppData\Roaming\npm\node_modules\azure-functions-core-tools\bin\workers\node\worker-bundle.js:18675:26)
+<br/>[api]     <i class="ms-5"></i>at ClientDuplexStream.&lt;anonymous&gt; (C:\Users\whois\AppData\Roaming\npm\node_modules\azure-functions-core-tools\bin\workers\node\worker-bundle.js:18455:30)
+<br/>[api]     <i class="ms-5"></i>at ClientDuplexStream.emit (events.js:315:20)
+<br/>[api]     <i class="ms-5"></i>at addChunk (internal/streams/readable.js:309:12)
+<br/>[api]     <i class="ms-5"></i>at readableAddChunk (internal/streams/readable.js:284:9)
+<br/>[api]     <i class="ms-5"></i>at ClientDuplexStream.Readable.push (internal/streams/readable.js:223:10)
+<br/>[api]     <i class="ms-5"></i>at Object.onReceiveMessage (C:\Users\whois\AppData\Roaming\npm\node_modules\azure-functions-core-tools\bin\workers\node\worker-bundle.js:23010:19)
+<br/>[api]     <i class="ms-5"></i>at InterceptingListener.module.exports.InterceptingListener.recvMessageWithContext (C:\Users\whois\AppData\Roaming\npm\node_modules\azure-functions-core-tools\bin\workers\node\worker-bundle.js:22320:19)
+<br/>[api] [2021-08-07T18:01:57.273Z] undefined
+<br/>[swa] GET http://192.168.1.165:5001/api/film - 200
+<br/>[api] [2021-08-07T18:01:57.274Z] Executed 'Functions.GetFilm' (Succeeded, Id=0aa44459-c919-4097-abd8-df81db0caa77, 
+Duration=3ms)
+            </pre>
           </div>
-        </p>
-        <p class="card-text text-muted mt-2">
-          Note the value is only available to authorized users
-        </p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Pricing
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Reduced Infrastructure
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- <p>Loading content through API => APIM: <b id="pet">...</b></p> -->
     
   </main>
 
@@ -83,11 +146,11 @@
       document.querySelector('#functionConfigValue').textContent = text;
     }());
 
-    // (async function() {
-    //   let { pet } = await( await fetch(`/api/pet`)).json();
-    //   console.log("pet: " + pet);
-    //   document.querySelector('#pet').textContent = `w00f! ${pet.name} is ${pet.status}`;
-    // }());
+    (async function() {
+      let { film } = await( await fetch(`/api/film`)).json();
+      console.log("film: " + film);
+      document.querySelector('#film').textContent = `${film.title} released ${film.release_date} made ${film.revenue}`;
+    }());
 
     (async function() {
       const response = await fetch('/.auth/me');

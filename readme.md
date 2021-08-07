@@ -19,14 +19,28 @@ Running Site & Backend Locally:
 1. Add API Local Settings
    - Create `/api/local.settings.json`
    - Ensure file is _excluded_ from source control
+
+      ``` json
+      {
+         "IsEncrypted": false,
+         "Values": {
+            "FUNCTIONS_WORKER_RUNTIME": "node",
+            "MY_CONFIG_VALUE": "555-555-5555",
+            "TMDBApiKey": "{{Placeholder}}"
+         }
+      }
+      ```
    - Add required keys for local development, and/or configure on Azure host:
-     - "Values:GREYBILL_PETS_API_KEY"
-     - "Values:GREYBILL_PETS_BASE_URL"
-2. Start Azure Function Emulator
-   - Press `F5` in Visual Studio Code
-3. Start Live Server
-   - Press `Ctrl+Shift+P`
-   - Select `Live Server: Open with Live Server`
+     - _MY_CONFIG_VALUE_
+       - This can be any text value
+       - The value is read by the [GetMessage](./api/GetMessage/index.js) Function
+       - Displayed in the _How to Retrieve Host Configuration_ section of the app
+     - [The MovieDB API Key](https://developers.themoviedb.org/3/getting-started/introduction)
+       - Will require a valid TMDB API Key
+       - The value is read by the [GetFilm](./api/GetFilm/index.js) Function
+       - _TODO: Displayed in the {{section}}_
+2. Start the [Static Web Apps CLI](https://github.com/Azure/static-web-apps-cli)
+   - `swa start .app --port=5001 --api ./api --api-port=5005`
 
 
 ## References

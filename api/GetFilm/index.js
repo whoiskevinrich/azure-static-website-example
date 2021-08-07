@@ -1,15 +1,11 @@
 var fetch = require('node-fetch');
 
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request for Pet');
+    context.log('JavaScript HTTP trigger function processed a request for Film from Managed API');
 
-    const url = `${process.env.GREYBILL_PETS_BASE_URL}/pet/1`;
-    const headers = {
-        'Cache-Control': 'no-cache',
-        'Ocp-Apim-Subscription-Key': process.env.GREYBILL_PETS_API_KEY
-    };
+    const url = `https://api.themoviedb.org/3//movie/154?api_key=${process.env.TMDBApiKey}`;
 
-    async function getPet(){
+    async function getFilm(){
         try{
             // turn off cert issues; something off about the network
             //  https://stackoverflow.com/questions/51995925/node-fetch-request-fails-on-server-unable-to-get-local-issuer-certificate
@@ -22,12 +18,12 @@ module.exports = async function (context, req) {
         }
     }
 
-    let pet = await getPet();
+    let film = await getFilm();
 
-    context.log(pet);
+    context.log(film);
 
     context.res = {
       headers: { 'Content-Type': 'application/json' },
-      body: { pet }
+      body: { film }
     };
   };

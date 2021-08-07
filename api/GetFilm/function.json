@@ -8,7 +8,7 @@
       "methods": [
         "get"
       ],
-      "route": "pet"
+      "route": "film"
     },
     {
       "type": "http",
