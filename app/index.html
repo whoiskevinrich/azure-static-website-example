@@ -25,9 +25,24 @@
     </div>
   </nav>
 
-  <main>
-    <h1>Azure Static Web App Example</h1>
-    <p>Loading content through BFF API Configuration: <b id="phone">...</b></p>
+  <main class="container">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">How to Retrieve Host Configuration</h4>
+        <h6 class="card-subtitle mb-2 text-muted">
+          The static JavaScript can call it's BFF api to retrieve config values.
+        </h6>
+        <p class="card-text">
+          <div class="alert alert-info">
+            Dynamic content from Azure Function Config: <b id="phone">...</b>
+          </div>
+        </p>
+        <p class="card-text text-muted mt-2">
+          Note the value is only available to authorized users
+        </p>
+      </div>
+    </div>
+
     <!-- <p>Loading content through API => APIM: <b id="pet">...</b></p> -->
     
     <p>
@@ -44,7 +59,7 @@
     (async function() {
       let { text } = await( await fetch(`/api/message`)).json();
       console.log("Phone Number: " + text)
-      document.querySelector('#phone').textContent = `Greetings, Program! My phone number is: ${text}`;
+      document.querySelector('#phone').textContent = `${text}`;
     }());
 
     // (async function() {
