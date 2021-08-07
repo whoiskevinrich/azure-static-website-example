@@ -64,7 +64,7 @@
         </h6>
         <p class="card-text">
           <div class="alert alert-info">
-            Dynamic content from Azure Function Config: <b id="phone">...</b>
+            Dynamic content from Azure Function Config: <b id="functionConfigValue">...</b>
           </div>
         </p>
         <p class="card-text text-muted mt-2">
@@ -80,8 +80,7 @@
   <script>
     (async function() {
       let { text } = await( await fetch(`/api/message`)).json();
-      console.log("Phone Number: " + text)
-      document.querySelector('#phone').textContent = `${text}`;
+      document.querySelector('#functionConfigValue').textContent = text;
     }());
 
     // (async function() {
