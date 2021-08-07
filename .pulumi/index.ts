@@ -16,6 +16,7 @@ const resourceGroup = new resources.ResourceGroup("resourceGroup", {
     resourceGroupName: "azure-static-webapp-rg"
 });
 
+
 // Create site
 const site = new web.StaticSite("staticSite", {
     resourceGroupName: resourceGroup.name,
@@ -27,6 +28,7 @@ const site = new web.StaticSite("staticSite", {
     repositoryToken: repositoryToken,
     branch: "main"
 });
+
 
 // // Create an Azure resource (Storage Account)
 // const storageAccount = new storage.StorageAccount("sa", {
