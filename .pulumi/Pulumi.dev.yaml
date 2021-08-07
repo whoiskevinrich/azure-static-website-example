@@ -1,0 +1,5 @@
+config:
+  azure-native:location: WestUS2
+  azure-static-site:repositoryToken:
+    secure: AAABAE/2I9mwLc6F+LCCv0/7RNQVq7UgFiRVpn5zL18Pe8B02hCwjuCIQpp+5pgsNkC2cXScQvL3njZs21yBvFCZ7bV/PqmO
+  azure-static-site:repositoryUrl: https://github.com/whoiskevinrich/azure-static-website-example
